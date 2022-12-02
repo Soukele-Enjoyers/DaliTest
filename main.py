@@ -103,5 +103,5 @@ def traitementTexte():
 
 if arguments[0] == 'background':
     createBackground(arguments[1])
-else
+else:
     createMonster(arguments[1])

@@ -42,7 +42,7 @@ openai.Model.list()
 
 
 def createMonster(type):
-    nbIteration = 4
+    nbIteration = 8
 
     response = openai.Image.create(
         prompt=type + " virus as an 8-bit monster from a fantasy world, done using a red color palette",
@@ -106,4 +106,4 @@ if len(arguments)>1:
     else:
         createMonster(arguments[2])
 else:
-    createBackground('rural medieval')
+    createMonster('pute')

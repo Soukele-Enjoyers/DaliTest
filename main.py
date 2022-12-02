@@ -61,12 +61,12 @@ def createBackground(type):
     nbIteration = 4
 
     response = openai.Image.create(
-        prompt=type + " landscape in a 8-bit fantasy world, done using a red color palette",
+        prompt=type + " landscape in a fantasy world",
         n=nbIteration,
-        size="256x256"
+        size="1024x1024"
     )
     for i in range(nbIteration):
-        fileInput = folderPath + "/monster/" + type + "0-" + str(i) + ".png"
+        fileInput = folderPath + "/background/" + type + "0-" + str(i) + ".png"
 
         url = (response['data'][i]['url'])
         urllib.request.urlretrieve(url, fileInput)
@@ -100,8 +100,10 @@ def traitementTexte():
     )
     print(response['data'])
 
-
-if arguments[0] == 'background':
-    createBackground(arguments[1])
+if len(arguments)>1:
+    if arguments[1] == 'background':
+        createBackground(arguments[2])
+    else:
+        createMonster(arguments[2])
 else:
-    createMonster(arguments[1])
+    createBackground('rural medieval')

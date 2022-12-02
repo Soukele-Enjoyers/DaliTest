@@ -1,5 +1,5 @@
 
-import os
+import sys
 import urllib.request
 
 import PIL.Image
@@ -10,7 +10,10 @@ import PIL.Image as PImg
 
 import urllib3.request
 
-folderPath = "C:/Users/crhon/Desktop/buffer";
+folderPath = "C:/Users/crhon/Desktop/buffer"
+
+arguments = sys.argv
+
 def getAverage(imageOpen:PIL.Image.Image, area, cellSize):
     avg = (0,0,0)
     for x in range(cellSize[0]):
@@ -38,6 +41,35 @@ openai.api_key = "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"
 openai.Model.list()
 
 
+def createMonster(type):
+    nbIteration = 4
+
+    response = openai.Image.create(
+        prompt=type + " virus as an 8-bit monster from a fantasy world, done using a red color palette",
+        n=nbIteration,
+        size="256x256"
+    )
+    for i in range(nbIteration):
+        fileInput = folderPath + "/monster/" + type + "0-" + str(i) + ".png"
+        fileOutput = folderPath + "/monster/" + type + "1-" + str(i) + ".png"
+
+        url = (response['data'][i]['url'])
+        urllib.request.urlretrieve(url, fileInput)
+        open(fileOutput, 'wb').write(rembg.remove(open(fileInput, 'rb').read()))
+
+def createBackground(type):
+    nbIteration = 4
+
+    response = openai.Image.create(
+        prompt=type + " landscape in a 8-bit fantasy world, done using a red color palette",
+        n=nbIteration,
+        size="256x256"
+    )
+    for i in range(nbIteration):
+        fileInput = folderPath + "/monster/" + type + "0-" + str(i) + ".png"
+
+        url = (response['data'][i]['url'])
+        urllib.request.urlretrieve(url, fileInput)
 def createSprite():
     nbIteration = 4
 
@@ -68,4 +100,8 @@ def traitementTexte():
     )
     print(response['data'])
 
-createSprite()
+
+if arguments[0] == 'background':
+    createBackground(arguments[1])
+else
+    createMonster(arguments[1])

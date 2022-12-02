@@ -106,4 +106,4 @@ if len(arguments)>1:
     else:
         createMonster(arguments[2])
 else:
-    createMonster('pute')
+    createMonster('VIH')
